@@ -18,9 +18,9 @@ export class EksStack extends cdk.Stack {
       kubectlLayer: new KubectlV31Layer(this, 'KubectlLayer'),
     });
 
-    cluster.awsAuth.addUserMapping(new iam.User(this, 'EksAdminUser', {
-      userName: 'Tharini'
-    }), {
+    const adminUser = iam.User.fromUserName(this, 'EksAdminUser', 'Tharini');
+
+    cluster.awsAuth.addUserMapping(adminUser, {
       groups: ['system:masters']
     });
   }
